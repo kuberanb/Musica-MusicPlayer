@@ -8,9 +8,10 @@
 
 
    <application
-        android:label="musica"
+        android:requestLegacyExternalStorage="true"
+        android:label="Musica"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"
             android:exported="true"

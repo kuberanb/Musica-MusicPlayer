@@ -156,7 +156,7 @@ showCreatingPlaylistDialoge({
           key: _formKey,
           child: TextFormField(
             controller: textEditingController,
-            style:const TextStyle(color: kWhite),
+            style: const TextStyle(color: kWhite),
             keyboardType: TextInputType.text,
             maxLines: 1,
             decoration: InputDecoration(
@@ -231,6 +231,15 @@ showEditingPlaylistDialogue({
   createPlaylist() async {
     List<Songs> songList = [];
 
+    // songList.add(playlistBox.get(playlistName)!.toList().cast<Songs>());
+
+    final List<Songs> pl =
+        playlistBox.get(playlistName)!.toList().cast<Songs>();
+
+    for (final song in pl) {
+      songList.add(song);
+    }
+
     final String text = textEditingController.text;
 
     if (playlistName.isEmpty) {
@@ -254,6 +263,7 @@ showEditingPlaylistDialogue({
           child: TextFormField(
             controller: textEditingController,
             maxLines: 1,
+            style: const TextStyle(color: kWhite),
             decoration: InputDecoration(
               //  hintText: 'Playlist Name',
               border: OutlineInputBorder(
@@ -358,9 +368,9 @@ showSongModalSheet({
                           );
 
                           Navigator.pop(context);
-                          
-                          playlistFullScreen(playlistName: playlistKey, context: context);
 
+                          refreshplaylistFullScreen(
+                              playlistName: playlistKey, context: context);
                         },
                         leading: QueryArtworkWidget(
                           id: int.parse(song.id),
@@ -399,12 +409,18 @@ showSongModalSheet({
 }
 
 void refreshUINavigationPage({required BuildContext context}) {
-
-  Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: ((context) =>const ScreenNavigation())),(Route route) => false);
- // const ScreenHomeList();
+  Navigator.of(context).pushAndRemoveUntil(
+      MaterialPageRoute(builder: ((context) => const ScreenNavigation())),
+      (Route route) => false);
+  // const ScreenHomeList();
 }
 
-void playlistFullScreen({required String playlistName,required BuildContext context}){
-
-  Navigator.of(context).push(MaterialPageRoute(builder: ((context) => PlaylistTileFullScreen(playlistName: playlistName))));
+void refreshplaylistFullScreen(
+    {required String playlistName, required BuildContext context}) {
+  Navigator.of(context).pushAndRemoveUntil(
+      MaterialPageRoute(
+        builder: ((context) =>
+            PlaylistTileFullScreen(playlistName: playlistName)),
+      ),
+      (route) => false);
 }
