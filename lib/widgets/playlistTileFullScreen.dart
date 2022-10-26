@@ -40,17 +40,17 @@ class _PlaylistTileFullScreenState extends State<PlaylistTileFullScreen> {
     final screenHeight = MediaQuery.of(context).size.height;
     songList = playlistBox.get(widget.playlistName)!.toList().cast<Songs>();
 
-
-Future<bool> _onWillPop() async {
-  Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => const ScreenNavigation(),), (route) => false);
-return false;
-
-}
-
-
+    Future<bool> _onWillPop() async {
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(
+            builder: (context) => const ScreenNavigation(),
+          ),
+          (route) => false);
+      return false;
+    }
 
     return WillPopScope(
-      onWillPop:_onWillPop,
+      onWillPop: _onWillPop,
       child: Scaffold(
         backgroundColor: kBackgroundColor,
         appBar: AppBar(
@@ -64,7 +64,7 @@ return false;
               onPressed: () {
                 Navigator.of(context).pushAndRemoveUntil(
                     MaterialPageRoute(
-                      builder: ((context) =>const ScreenNavigation()),
+                      builder: ((context) => const ScreenNavigation()),
                     ),
                     (route) => false);
               },
