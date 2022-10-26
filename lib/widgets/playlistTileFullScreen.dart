@@ -39,61 +39,74 @@ class _PlaylistTileFullScreenState extends State<PlaylistTileFullScreen> {
 
     final screenHeight = MediaQuery.of(context).size.height;
     songList = playlistBox.get(widget.playlistName)!.toList().cast<Songs>();
-    return Scaffold(
-      backgroundColor: kBackgroundColor,
-      appBar: AppBar(
+
+
+Future<bool> _onWillPop() async {
+  Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => const ScreenNavigation(),), (route) => false);
+return false;
+
+}
+
+
+
+    return WillPopScope(
+      onWillPop:_onWillPop,
+      child: Scaffold(
         backgroundColor: kBackgroundColor,
-        title: Text(
-          widget.playlistName,
-          style: const TextStyle(color: kWhite),
-        ),
-        automaticallyImplyLeading: false,
-        leading: IconButton(
-            onPressed: () {
-              Navigator.of(context).pushAndRemoveUntil(
-                  MaterialPageRoute(
-                    builder: ((context) =>const ScreenNavigation()),
-                  ),
-                  (route) => false);
-            },
-            icon: const Icon(Icons.arrow_back)),
-        actions: [
-          IconButton(
-            onPressed: () {
-              //  setState(() {
-              showSongModalSheet(
-                  context: context,
-                  screenHeight: screenHeight,
-                  playlistKey: widget.playlistName);
-              //   });
-            },
-            icon: const Icon(
-              Icons.add,
-              size: 24,
-            ),
+        appBar: AppBar(
+          backgroundColor: kBackgroundColor,
+          title: Text(
+            widget.playlistName,
+            style: const TextStyle(color: kWhite),
           ),
-        ],
-      ),
-      body: SingleChildScrollView(
-        child: ListView.builder(
-          shrinkWrap: true,
-          scrollDirection: Axis.vertical,
-          itemCount: songList.length,
-          itemBuilder: ((context, index) {
-            return CreatedPlaylistTile(
-                onpressed: () {
-                  setState(() {
-                    UserPlaylist.deleteFromPlaylist(
-                      context: context,
-                      songId: songList[index].id,
-                      playlistName: widget.playlistName,
-                    );
-                  });
-                },
-                index: index,
-                audioPlayer: audioPlayer,
-                songList: songList);
-          }),
+          automaticallyImplyLeading: false,
+          leading: IconButton(
+              onPressed: () {
+                Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(
+                      builder: ((context) =>const ScreenNavigation()),
+                    ),
+                    (route) => false);
+              },
+              icon: const Icon(Icons.arrow_back)),
+          actions: [
+            IconButton(
+              onPressed: () {
+                //  setState(() {
+                showSongModalSheet(
+                    context: context,
+                    screenHeight: screenHeight,
+                    playlistKey: widget.playlistName);
+                //   });
+              },
+              icon: const Icon(
+                Icons.add,
+                size: 24,
+              ),
+            ),
+          ],
+        ),
+        body: SingleChildScrollView(
+          child: ListView.builder(
+            shrinkWrap: true,
+            scrollDirection: Axis.vertical,
+            itemCount: songList.length,
+            itemBuilder: ((context, index) {
+              return CreatedPlaylistTile(
+                  onpressed: () {
+                    setState(() {
+                      UserPlaylist.deleteFromPlaylist(
+                        context: context,
+                        songId: songList[index].id,
+                        playlistName: widget.playlistName,
+                      );
+                    });
+                  },
+                  index: index,
+                  audioPlayer: audioPlayer,
+                  songList: songList);
+            }),
+          ),
         ),
       ),
     );

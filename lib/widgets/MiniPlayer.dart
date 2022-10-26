@@ -145,6 +145,7 @@ void shuffleButtonPressed() {
 
     return widget.audioPlayer.builderCurrent(
       builder: ((context, playing) {
+        
         final myAudio = find(songAudio, playing.audio.assetAudioPath);
 
         return Container(
