@@ -64,7 +64,9 @@ class _SearchScreenState extends State<SearchScreen> {
         backgroundColor: kBackgroundColor,
         title: const Text(
           'Search Songs',
-          style: TextStyle(color: kWhite),
+          style: TextStyle(
+            color: kWhite,
+          ),
         ),
       ),
       body: SafeArea(
@@ -122,7 +124,10 @@ class _SearchScreenState extends State<SearchScreen> {
               Expanded(
                 child: (searchedSongs!.isEmpty)
                     ? const Center(
-                        child: Text('No Songs Found',style: TextStyle(color: kWhite),),
+                        child: Text(
+                          'No Songs Found',
+                          style: TextStyle(color: kWhite),
+                        ),
                       )
                     : ListView.builder(
                         itemCount: searchedSongs?.length,
